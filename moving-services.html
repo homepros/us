@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Moving Services</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+    <style>
+        .v-list--three-line .v-list__tile {
+            height: 72px !important;
+        }
+
+        .round-list {
+            border-radius: 10px;
+        }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142791202-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-142791202-2');
+    </script>
+
+</head>
+
+<body>
+    <div id="app">
+        <v-app light>
+            <v-toolbar class="purple darken-3 white--text">
+                <v-toolbar-title>
+                    {{ title }} 
+                </v-toolbar-title>
+            </v-toolbar>
+            <v-content>
+
+
+                <v-layout column align-center justify-center>
+                    <v-container fluid>
+                        <v-flex xs12 md6 offset-md3>
+                            <!-- <h1 class="my-3">{{ title }} </h1> -->
+                            <v-card class="elevation-2 mb-2 round-list white">
+                                <v-card-title>
+                                    <b>Enter zipcode to view movers</b>
+                                </v-card-title>
+                                <v-card-text>
+                                    <!-- <v-select :items="positions" label="Positions" box chips multiple v-model='k'></v-select> -->
+                                    <v-text-field label="Zipcode" v-model="zipcode" box mask="#####" @change="checkdisabled()"></v-text-field>
+                                    <small class="muted grey--text text--lighten-1">By clicking button below, I agree to the Terms of Use and Privacy Policy. By providing your phone number, you will receive texts for our newsletters. Consent not required for use of services.</small>
+                                </v-card-text>
+                                <v-card-actions class="pb-4">
+                                    <v-btn depressed round block color="purple darken-3 white--text" @click="redirect()" :disabled="disabled">View Pros</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                            
+                        </v-flex>
+                    </v-container>
+                </v-layout>
+            </v-content>
+        </v-app>
+    </div>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+    
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    disabled: true,
+                    title: 'Best Movers Near You',
+                     zipcode: "",
+                    sid: 'x9G'
+                }
+            },
+            methods: {
+                getUrlVars() {
+                    var vars = {};
+                    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                        vars[key] = value;
+                    });
+                    return vars;
+                },
+                goto(url) {
+                    url = 'https://api.apply-now.io/api/v1/go?u='+url;
+                    let newTab = window.open();
+                    newTab.location.href = url;
+                },
+                redirect () {
+                    axios.get('https://app.lapro.io/api/v1/p/id/2/hash/'+this.zipcode)
+                        .then(({data})=>{
+                            window.location.replace('https://app.lapro.io/m/v2/pros/'+this.sid+'/'+data);
+                        })
+                },
+                checkdisabled() {
+                    if(this.zipcode != '') this.disabled = false;
+                    else this.disabled = true;
+                }
+            },
+            created() {
+                let vars = this.getUrlVars()
+                if('l' in vars) this.form['zipcode'] = decodeURI(this.getUrlVars()['l']);
+                if('q' in vars) this.form['q'] = decodeURI(this.getUrlVars()['q']);
+                // if(this.form['q'] != '') this.show_q = false
+                // if(this.form['zipcode'] != '') this.show_l = false
+            }
+        })
+    </script>
+</body>
+
+</html>
