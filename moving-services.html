@@ -17,6 +17,10 @@
         .round-list {
             border-radius: 10px;
         }
+
+        h1, h3 {
+            text-align: center;
+        }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142791202-1"></script>
@@ -35,7 +39,8 @@
         <v-app light>
             <v-toolbar class="purple darken-3 white--text">
                 <v-toolbar-title>
-                    {{ title }} 
+                    <img src="https://app.lapro.io/img/lapro/lapro-logo.svg" height="20"></img>
+                    
                 </v-toolbar-title>
             </v-toolbar>
             <v-content>
@@ -44,15 +49,15 @@
                 <v-layout column align-center justify-center>
                     <v-container fluid>
                         <v-flex xs12 md6 offset-md3>
-                            <!-- <h1 class="my-3">{{ title }} </h1> -->
+                            <h1 class="mt-3 headline">{{ title }} </h1>
+                            <h3 class="mb-3 subheading grey--text text--darken-2">{{ header }} </h3>
                             <v-card class="elevation-2 mb-2 round-list white">
-                                <v-card-title>
-                                    <b>Enter zipcode to view movers</b>
+                                <v-card-title class="subheading">
+                                    Where are you moving from?
                                 </v-card-title>
                                 <v-card-text>
                                     <!-- <v-select :items="positions" label="Positions" box chips multiple v-model='k'></v-select> -->
                                     <v-text-field label="Zipcode" v-model="zipcode" box mask="#####" @change="checkdisabled()"></v-text-field>
-                                    <small class="muted grey--text text--lighten-1">By clicking button below, I agree to the Terms of Use and Privacy Policy. By providing your phone number, you will receive texts for our newsletters. Consent not required for use of services.</small>
                                 </v-card-text>
                                 <v-card-actions class="pb-4">
                                     <v-btn depressed round block color="purple darken-3 white--text" @click="redirect()" :disabled="disabled">View Pros</v-btn>
@@ -75,7 +80,8 @@
             data() {
                 return {
                     disabled: true,
-                    title: 'Best Movers Near You',
+                    title: 'Top-rated movers from $19/hr',
+                    header: 'Instant low price from 10 movers near you.',
                      zipcode: "",
                     sid: 'x9G'
                 }
