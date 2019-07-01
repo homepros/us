@@ -102,12 +102,26 @@
                     newTab.location.href = url;
                 },
                 redirect () {
+                    // ga event
+                    gtag('event', 'zipcode_submitted', {
+                        'event_category': 'Zip_page',
+                        'event_label': 'Submit zipcode',
+                        'value': 2
+                    });
+                    // end ga event
                     axios.get('https://app.lapro.io/api/v1/p/id/2/hash/'+this.zipcode)
                         .then(({data})=>{
                             window.location.replace('https://app.lapro.io/m/v2/pros/'+this.sid+'/'+data);
                         })
                 },
                 checkdisabled() {
+                    // ga event
+                    gtag('event', 'zipcode_entered', {
+                        'event_category': 'Zip_page',
+                        'event_label': 'Enter zipcode',
+                        'value': 1
+                    });
+                    // end ga event
                     if(this.zipcode != '') this.disabled = false;
                     else this.disabled = true;
                 }
