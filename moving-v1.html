@@ -34,6 +34,7 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-142791202-2');
+        gtag('config', 'AW-770861134');
     </script>
 
 </head>
@@ -172,6 +173,7 @@
                         'event_label': 'Submit lead',
                         'value': 1
                     });
+                    gtag('event', 'conversion', {'send_to': 'AW-770861134/kLioCODg9aQBEM7Qye8C'});
                     // end ga event
                     axios.get('https://app.lapro.io/api/v1/p/id/2/hash/' + this.zipcode)
                         .then(({
