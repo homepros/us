@@ -147,7 +147,7 @@
                 redirect() {
                     // ga event
                     gtag('event', 'lead_submitted', {
-                        'event_category': 'moving_services',
+                        'event_category': 'moving_v2_submitted',
                         'event_label': 'Submit lead',
                         'value': 1
                     });
@@ -192,6 +192,16 @@
                         })
                 },
                 checkdisabled() {
+                    // ga event
+                    if(this.mobile != '') {
+                        gtag('event', 'contact_entered', {
+                            'event_category': 'moving_v2_enter',
+                            'event_label': window.btoa(this.mobile),
+                            'value': 1
+                        });
+                    }
+                    gtag('event', 'conversion', {'send_to': 'AW-770861134/kLioCODg9aQBEM7Qye8C'});
+                    // end ga event
                     if (this.name != '' && this.mobile != '') this.disabled = false;
                     else this.disabled = true;
                 }
