@@ -200,10 +200,14 @@
                             'value': 1
                         });
                     }
-                    gtag('event', 'conversion', {'send_to': 'AW-770861134/kLioCODg9aQBEM7Qye8C'});
                     // end ga event
-                    if (this.name != '' && this.mobile != '') this.disabled = false;
+                    if(this.mobile != '' && this.validatePhone(this.mobile) === false) alert('Invalid phone number.')
+                    if (this.name != '' && this.mobile != '' && this.validatePhone(this.mobile)) this.disabled = false;
                     else this.disabled = true;
+                },
+                validatePhone(p) {
+                    var patt = new RegExp("[0-9]{10}");
+                    return patt.test(p);
                 }
             },
             created() {
