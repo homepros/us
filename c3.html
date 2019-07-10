@@ -143,7 +143,7 @@
                 redirect() {
                     // ga event
                     gtag('event', 'lead_submitted', {
-                        'event_category': 'moving_v2_submitted',
+                        'event_category': 'c3_submitted',
                         'event_label': window.btoa(this.mobile),
                         'value': 1
                     });
@@ -185,7 +185,7 @@
                     // ga event
                     if(this.mobile != '') {
                         gtag('event', 'contact_entered', {
-                            'event_category': 'moving_v2_enter',
+                            'event_category': 'c3_enter',
                             'event_label': window.btoa(this.mobile),
                             'value': 0
                         });
