@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Coupons for Your Home Projects</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://cloudjs.github.io/js/vuetify.min.css" rel="stylesheet">
+    <script src="https://cloudjs.github.io/js/vue.min.js"></script>
+    <script src="https://cloudjs.github.io/js/vuetify.min.js"></script>
+    <style>
+        .v-list--three-line .v-list__tile {
+            height: 72px !important;
+        }
+
+        .round-list {
+            border-radius: 10px;
+        }
+
+        .v-title {
+            line-height: 125% !important;
+        }
+
+        .top-round {
+            border-top-left-radius: 10px !important;
+            border-top-right-radius: 10px !important;
+        }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142791202-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-142791202-2');
+        gtag('config', 'AW-770861134');
+    </script>
+
+</head>
+
+<body>
+    <div id="app">
+        <v-app light>
+            <v-content>
+
+
+                <v-layout column align-center justify-center>
+                    <v-container fluid>
+                        <v-flex xs12 md6 offset-md3>
+                                <p class="text-xs-center">
+                                        <img src="https://www.lapro.io/lapro/lapro-logo.png" alt="" height="30">
+                                    </p>
+
+                                <v-card class="elevation-2 mb-0 top-round white">
+                                        <v-card-text>
+                                                <div class="text-xs-center">
+                                                        
+                                                        <div class="v-title title text-capitalize mb-3">
+                                                            {{ title }}
+                                                        </div>
+                                                        <div>
+                                                            Don't Miss Out.  Save on 150 Services.
+                                                        </div>
+                                                        <!-- <div class="grey--text text--darken-1 my-2">{{ items[0].company }} - {{ items[0].city[0] }}</div>
+                                                        <div class="caption grey--text text--lighten-1" v-html="items[0].description+'...'"></div> -->
+                                                    </div>
+            
+                                            </v-card-text>
+                                            <v-divider></v-divider>
+
+                                    <v-card-title class="subheading">
+                                        <b>Sign Up and Get $100</b>
+                                    </v-card-title>
+                                    <v-card-text>
+                                        <!-- <v-select :items="positions" label="Positions" box chips multiple v-model='k'></v-select> -->
+                                        <v-text-field label="First & Last Name" v-model="name" box
+                                            @change="checkdisabled()"></v-text-field>
+                                        <v-text-field label="Mobile Phone Number" v-model="mobile" mask="phone" box
+                                            @change="checkdisabled()"></v-text-field>
+                                        
+                                    </v-card-text>
+                                    <v-card-actions class="pb-4">
+                                        <v-btn depressed round block color="purple darken-3 white--text"
+                                            @click="saveData()" :disabled="disabled">Next</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                                <small class="muted grey--text text--lighten-1">By clicking button above, I
+                                        agree to the Terms of Use and Privacy Policy. By providing your phone
+                                        number, you will receive texts for our newsletters. Consent not required for
+                                        use of services.<br>The coupons will be distributed as $5 credit on Lapro for 20 projects. Terms Applies.</small>
+                        </v-flex>
+                    </v-container>
+                </v-layout>
+            </v-content>
+        </v-app>
+    </div>
+
+    <script src="https://cloudjs.github.io/js/axios.min.js"></script>
+    <script src="https://cloudjs.github.io/js/lodash.min.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    title: 'Post Your Home Projects and Get $100*',
+                    items: {"service":"Local Moving (under 50 miles)","data":[{"id":1234072,"team_id":1234072,"name":"Big Family Movers","distance":33.121319820895266},{"id":1232538,"team_id":1232538,"name":"Iron Man Moving, Inc.","distance":38.426432627482235},{"id":1232021,"team_id":1232021,"name":"Red Carpet Moving and Storage, Inc.","distance":38.87805334187204},{"id":1232532,"team_id":1232532,"name":"IMoving Professional Moving System, Inc.","distance":40.38415600834633},{"id":1232488,"team_id":1232488,"name":"Quantum Moving","distance":46.62076405899601}]},
+                    name: "",
+                    mobile: "",
+                    zipcode: "",
+                    sid: 'x9G',
+                    service_id: '326',
+                    location: "",
+                    dialog: true,
+                    disabled: true
+                }
+            },
+            methods: {
+                getUrlVars() {
+                    var vars = {};
+                    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key,
+                    value) {
+                        vars[key] = value;
+                    });
+                    return vars;
+                },
+                saveData() {
+                    axios.post('https://api.apply-now.io/api/v1/subscription/addl', {
+                            name: this.name,
+                            mobile: this.mobile,
+                            zipcode: this.zipcode,
+                            service_id: this.service_id
+                        })
+                        .then((response) => {
+                            this.redirect()
+                        })
+                },
+                redirect() {
+                    // ga event
+                    gtag('event', 'lead_submitted', {
+                        'event_category': 'moving_v2_submitted',
+                        'event_label': window.btoa(this.mobile),
+                        'value': 1
+                    });
+                    gtag('event', 'conversion', {'send_to': 'AW-770861134/kLioCODg9aQBEM7Qye8C'});
+                    // end ga event
+                    window.location.replace('https://app.lapro.io/m/v0/p/create?phone=' + this.mobile);
+                },
+                getData() {
+                    axios.get('https://api.apply-now.io/api/v1/ip/current')
+                        .then(({
+                            data
+                        }) => {
+                            this.zipcode = data.zip
+                            this.location = data.city + ',' + data.region_code
+                            this.getHash()
+                        })
+                },
+                getHash() {
+                    axios.get('https://app.lapro.io/api/v1/p/id/2/hash/' + this.zipcode)
+                        .then(({
+                            data
+                        }) => {
+                            this.getResult(data);
+                        })
+                },
+                getResult(z) {
+                    axios.post("https://app.lapro.io/api/v2/pub/pros", {
+                            s: this.sid,
+                            z: z
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            if (data.data.length > 0) this.items = data
+                        
+                        })
+                },
+                checkdisabled() {
+                    // ga event
+                    if(this.mobile != '') {
+                        gtag('event', 'contact_entered', {
+                            'event_category': 'moving_v2_enter',
+                            'event_label': window.btoa(this.mobile),
+                            'value': 0
+                        });
+                    }
+                    // end ga event
+                    // if(this.mobile != '' && this.validatePhone(this.mobile) === false) alert('Invalid phone number.')
+                    if (this.name != '' && this.mobile != '') this.disabled = false;
+                    else this.disabled = true;
+                },
+                validatePhone(p) {
+                    var patt = new RegExp("[0-9]{10}");
+                    return patt.test(p);
+                }
+            },
+            created() {
+                this.getData();
+            },
+        })
+    </script>
+</body>
+
+</html>
